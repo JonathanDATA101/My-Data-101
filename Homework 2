@@ -1,0 +1,66 @@
+names = ["Jonathan", "Jason", "Rainn", "Booker", "Philip", "Harlamay", "Lin", "Jackson", "Mingming", "Bob"]
+all_scores = []
+for i in range(10):
+    student_name = input("Enter student name: ")
+    names.append(student_name)
+
+    student_scores = []
+    for j in range(5):
+        score = float(input(f"Enter score {j+1} for {student_name}: "))
+        student_scores.append(score)
+
+    all_scores.append(student_scores)
+
+import numpy as np
+
+grades_matrix = np.array(all_scores)
+
+weight = np.array([0.15, 0.15, 0.20, 0.30, 0.40, 0.50])
+
+print("Grades matrix shape:", grades_matrix.shape)
+print("Weights vector shape:", weights.shape)
+
+final_grades = grades_matrix @ weights
+
+letter_grades = []
+
+for score in final_grades:
+    if score >= 90:
+        letter_grades.append('A')
+    elif score >= 80:
+        letter_grades.append('B')
+    elif score >= 70:
+        letter_grades.append('C')
+    elif score >= 60:
+        letter_grades.append('D')
+    else:
+        letter_grades.append('F')
+
+print("\n========== FINAL GRADES ==========")
+for i in range(len(names)):
+    print(f"{names[i]}: {final_grades[i]: .2f}% -> Grade: {letter_grades[i]}")
+
+
+
+
+PART 2
+import pandas as pd
+
+df = pd.read_csv("titanic.csv")
+
+print("--- General DataFrame Info ---")
+df.info()
+
+print("--- Basic Summary Statistics ---")
+print(df.describe())
+
+print("\n--- Rows 100 to 105 for 'Name', 'Age', 'Fare' ---")
+print(df.loc[100:105, ['Name', 'Age', 'Fare']])
+
+quant_df = df.select_dtypes(include=['number'])
+cat_df = df.select_dtypes(include=['object'])
+
+quant_df.to_csv("titanic_quantitative.csv", index=False)
+cat_df.to_csv("titanic_categorical.csv", index=False)
+
+print("\nDataFrames succesfully split to csv!")
